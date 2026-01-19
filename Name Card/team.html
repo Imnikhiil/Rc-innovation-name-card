@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RC Innovation Club | Team</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    :root{
+      --primary:#0284c7;
+      --dark:#0f172a;
+      --bg:#e2e8f0;
+      --card:#ffffff;
+      --text:#334155;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      padding: 30px 15px;
+    }
+
+    .container{
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .top{
+      text-align:center;
+      margin-bottom: 25px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 14px;
+      background: rgba(2,132,199,0.12);
+      border: 1px solid rgba(2,132,199,0.25);
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+
+    .top h1{
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--dark);
+      letter-spacing: 0.2px;
+    }
+
+    .top p{
+      margin-top: 8px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 800px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .member-card{
+      background: var(--card);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.10);
+      border: 1px solid rgba(255,255,255,0.5);
+      transition: 0.3s ease;
+      overflow:hidden;
+      position: relative;
+    }
+
+    .member-card:hover{
+      transform: translateY(-6px);
+      border-color: rgba(2,132,199,0.4);
+    }
+
+    .avatar{
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 2px solid #e2e8f0;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.10);
+    }
+
+    .row{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+    }
+
+    .info h2{
+      font-size: 16px;
+      font-weight: 900;
+      margin-bottom: 3px;
+      color: var(--dark);
+    }
+
+    .info .role{
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .info .campus{
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .tagline{
+      margin-top: 12px;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.5;
+      font-style: italic;
+      min-height: 42px;
+    }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn{
+      flex: 1;
+      padding: 11px 12px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 13px;
+      transition: 0.25s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      text-decoration:none;
+    }
+
+    .btn.primary{
+      background: var(--primary);
+      color: white;
+    }
+    .btn.primary:hover{
+      opacity: 0.92;
+    }
+
+    .btn.ghost{
+      background: #f1f5f9;
+      color: var(--dark);
+      border: 1px solid #e2e8f0;
+    }
+    .btn.ghost:hover{
+      background: #e8eef6;
+    }
+
+    /* Modal */
+    .modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.55);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      padding: 16px;
+      z-index: 9999;
+    }
+
+    .modal.active{display:flex;}
+
+    .modal-box{
+      width: min(980px, 100%);
+      height: min(700px, 90vh);
+      background: white;
+      border-radius: 22px;
+      overflow:hidden;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+    }
+
+    .modal-topbar{
+      height: 58px;
+      background: #f8fafc;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 0 14px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .modal-topbar .title{
+      font-weight: 900;
+      font-size: 14px;
+      color: var(--dark);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .close-btn{
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: none;
+      cursor:pointer;
+      background: #e2e8f0;
+      font-size: 16px;
+      font-weight: 900;
+      transition: 0.2s ease;
+    }
+    .close-btn:hover{
+      background: #cbd5e1;
+    }
+
+    iframe{
+      width:100%;
+      height: calc(100% - 58px);
+      border: none;
+    }
+
+    .footer-note{
+      margin-top: 25px;
+      text-align:center;
+      font-size: 12px;
+      color:#64748b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="top">
+      <div class="badge"><i class="fa-solid fa-users"></i> RC Innovation Club</div>
+      <h1>Team Members</h1>
+      <p>
+        Meet our Core Team & Executives from <b>DSEU Rajokri Campus</b>.  
+        Click <b>View Profile</b> to open their interactive card.
+      </p>
+    </div>
+
+    <!-- ✅ TEAM GRID -->
+    <div class="grid">
+
+        <!-- ✅ Ankit Kumar Verma (Ambassador) -->
+<div class="member-card">
+  <div class="row">
+    <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Ankit Kumar Verma">
+    <div class="info">
+      <h2>Ankit Kumar Verma</h2>
+      <div class="role">Ambassador</div>
+      <div class="campus">DSEU Rajokri Campus</div>
+    </div>
+  </div>
+
+  <div class="tagline">“Representing the club with professionalism and student-focused impact.”</div>
+
+  <div class="actions">
+    <button class="btn primary" onclick="openProfile('Ankit Kumar Verma', 'Ankit.html')">
+      <i class="fa-solid fa-eye"></i> View Profile
+    </button>
+    <a class="btn ghost" href="Ankit.html" target="_blank">
+      <i class="fa-solid fa-up-right-from-square"></i> New Tab
+    </a>
+  </div>
+</div>
+
+
+      <!-- ✅ Raushani -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Raushani Singh">
+          <div class="info">
+            <h2>Raushani Singh</h2>
+            <div class="role">General Secretary</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Ensuring smooth club operations through leadership and coordination.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Raushani Singh', 'raushni.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="raushni.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Neha -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Neha Thakur">
+          <div class="info">
+            <h2>Neha Thakur</h2>
+            <div class="role">Communication Secretary</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Connecting members, maintaining clarity, and ensuring smooth communication.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Neha Thakur', 'Neha.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Neha.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Ankit Singh Dhami -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Ankit Singh Dhami">
+          <div class="info">
+            <h2>Ankit Singh Dhami</h2>
+            <div class="role">Technical Head</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Leading technical innovation and supporting project execution.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Ankit Singh Dhami', 'Ankit Singh Dhami.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Ankit Singh Dhami.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Rishab -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Rishab Kumar Jha">
+          <div class="info">
+            <h2>Rishab Kumar Jha</h2>
+            <div class="role">Tech Support Executive</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Ensuring smooth technical operations and quick troubleshooting.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Rishab Kumar Jha', 'Rishab.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Rishab.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Rashi (Raashi) -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Raashi Singh">
+          <div class="info">
+            <h2>Raashi Singh</h2>
+            <div class="role">Event Head</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Planning, managing, and delivering successful club events.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Raashi Singh', 'Rashi.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Rashi.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Pooja -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Pooja">
+          <div class="info">
+            <h2>Pooja</h2>
+            <div class="role">Event Assistant</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Supporting event execution with coordination and reliability.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Pooja', 'Pooja.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Pooja.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Mansi -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Mansi">
+          <div class="info">
+            <h2>Mansi</h2>
+            <div class="role">Media Head</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Creating a strong digital presence through creative media.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Mansi', 'mansi.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="mansi.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Om -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Om Kumar Nayak">
+          <div class="info">
+            <h2>Om Kumar Nayak</h2>
+            <div class="role">Poster Designer</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Designing impactful visuals for club promotions.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Om Kumar Nayak', 'Om Kumar Nayak.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Om Kumar Nayak.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Vanshika -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Vanshika Dixit">
+          <div class="info">
+            <h2>Vanshika Dixit</h2>
+            <div class="role">Poster Designer</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Crafting creative designs that represent club identity.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Vanshika Dixit', 'Vanshika dixit.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Vanshika dixit.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Vashu -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Vashu">
+          <div class="info">
+            <h2>Vashu</h2>
+            <div class="role">Social Media Executive</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Building engagement and growing the club’s social presence.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Vashu', 'Vashu.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Vashu.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Akansha -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Akansha">
+          <div class="info">
+            <h2>Akansha</h2>
+            <div class="role">Content & Documents Executive</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Managing documentation with clarity, quality, and professionalism.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Akansha', 'Akansha.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Akansha.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Sneha -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Sneha Rajput">
+          <div class="info">
+            <h2>Sneha Rajput</h2>
+            <div class="role">Video Editor Head</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Leading video content production with creativity and quality.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Sneha Rajput', 'Sneha.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Sneha.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Tushar -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Tushar">
+          <div class="info">
+            <h2>Tushar</h2>
+            <div class="role">Video Editor</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Creating engaging edits that showcase club activities.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Tushar', 'Tushar.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Tushar.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Aman -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Aman Kumar Sharma">
+          <div class="info">
+            <h2>Aman Kumar Sharma</h2>
+            <div class="role">Photography Head</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Capturing moments and maintaining visual storytelling quality.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Aman Kumar Sharma', 'Aman Kumar Sharma.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Aman Kumar Sharma.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+      <!-- ✅ Ritesh -->
+      <div class="member-card">
+        <div class="row">
+          <img class="avatar" src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Ritesh Verma">
+          <div class="info">
+            <h2>Ritesh Verma</h2>
+            <div class="role">Photography Assistant</div>
+            <div class="campus">DSEU Rajokri Campus</div>
+          </div>
+        </div>
+        <div class="tagline">“Supporting photography coverage with discipline and coordination.”</div>
+        <div class="actions">
+          <button class="btn primary" onclick="openProfile('Ritesh Verma', 'Ritesh.html')">
+            <i class="fa-solid fa-eye"></i> View Profile
+          </button>
+          <a class="btn ghost" href="Ritesh.html" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i> New Tab
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-note">
+      © RC Innovation Club | DSEU Rajokri Campus
+    </div>
+  </div>
+
+  <!-- ✅ Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <div class="modal-topbar">
+        <div class="title"><i class="fa-solid fa-user"></i> <span id="modalName">Profile</span></div>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <iframe id="profileFrame" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("modal");
+    const profileFrame = document.getElementById("profileFrame");
+    const modalName = document.getElementById("modalName");
+
+    function openProfile(name, file){
+      modal.classList.add("active");
+      modalName.innerText = name;
+      profileFrame.src = file;
+    }
+
+    function closeModal(){
+      modal.classList.remove("active");
+      profileFrame.src = "";
+    }
+
+    // Click outside close
+    modal.addEventListener("click", (e)=>{
+      if(e.target === modal) closeModal();
+    });
+
+    // ESC to close
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape") closeModal();
+    });
+  </script>
+
+</body>
+</html>

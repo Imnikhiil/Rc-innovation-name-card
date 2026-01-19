@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mansi | Media Head Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-accent: #0284c7; /* Professional Blue */
+            --dark-navy: #0f172a;
+            --soft-bg: #f8fafc;
+            --text-main: #334155;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Profile Card Structure */
+        .profile-card {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Initial Front View */
+        .card-header {
+            padding: 45px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            position: relative;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: 0.4s ease;
+        }
+
+        .name { margin: 0; font-size: 26px; font-weight: 800; color: var(--dark-navy); }
+        .title { color: var(--primary-accent); font-weight: 700; font-size: 13px; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .sub-title { font-size: 13px; color: #64748b; margin-top: 4px; }
+
+        .expand-hint {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* Hidden Details Content */
+        .card-body {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.6s ease;
+            padding: 0 25px;
+        }
+
+        /* When card is clicked (Active) */
+        .profile-card.active { transform: scale(1.02); }
+        .profile-card.active .card-body {
+            max-height: 1500px;
+            opacity: 1;
+            padding-bottom: 40px;
+        }
+        .profile-card.active .expand-hint { display: none; }
+
+        .tagline {
+            font-style: italic;
+            color: var(--primary-accent);
+            font-size: 14px;
+            text-align: center;
+            margin: 20px 0;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .section-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin: 25px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-label i { color: var(--primary-accent); width: 20px; }
+
+        .para { font-size: 14px; color: var(--text-main); line-height: 1.6; margin: 0; }
+
+        .points { padding-left: 20px; margin: 10px 0; }
+        .points li { font-size: 13px; color: var(--text-main); margin-bottom: 8px; }
+
+        .skill-set { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .skill-pill {
+            background: #f1f5f9;
+            color: var(--primary-accent);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Social Icons Section */
+        .connect-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .social-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            padding: 15px 5px;
+            border-radius: 15px;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            transition: 0.3s ease;
+        }
+
+        .social-box i { font-size: 22px; margin-bottom: 8px; }
+        .social-box span { font-size: 10px; font-weight: 700; color: var(--dark-navy); text-transform: uppercase; }
+
+        /* Icon Colors */
+        .wa-c i { color: #25D366; }
+        .li-c i { color: #0077b5; }
+        .ig-c i { color: #E1306C; }
+        .gh-c i { color: #171515; }
+        .em-c i { color: #ea4335; }
+
+        .social-box:hover {
+            transform: translateY(-5px);
+            background: #f1f5f9;
+            border-color: var(--primary-accent);
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-card" onclick="this.classList.toggle('active')">
+    <div class="card-header">
+        <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-glasses_23-2149436185.jpg" alt="Mansi" class="avatar">
+        <div class="name">Mansi</div>
+        <div class="title">Media Head | RC INNOVATION CLUB</div>
+        <div class="sub-title">DSEU Rajokri Campus</div>
+        <div class="expand-hint">Tap to learn more <i class="fa-solid fa-circle-chevron-down"></i></div>
+    </div>
+
+    <div class="card-body">
+        <p class="tagline">“Creating a strong digital presence through creative media.”</p>
+
+        <div class="section-label"><i class="fa-solid fa-id-card"></i> Introduction</div>
+        <p class="para">
+            I am Mansi, serving as the Media Head of RC Innovation Club at DSEU Rajokri Campus. I focus on managing media content, ensuring quality visuals, and maintaining the club’s online presence through effective creative strategy.
+        </p>
+
+        <div class="section-label"><i class="fa-solid fa-list-check"></i> Responsibilities</div>
+        <ul class="points">
+            <li>Lead media content planning and execution</li>
+            <li>Manage visual content for events and updates</li>
+            <li>Coordinate with designers and editors</li>
+            <li>Maintain a consistent media identity for the club</li>
+            <li>Support social media content execution</li>
+        </ul>
+
+        <div class="section-label"><i class="fa-solid fa-gears"></i> Skills</div>
+        <div class="skill-set">
+            <span class="skill-pill">Media Management</span>
+            <span class="skill-pill">Creativity</span>
+            <span class="skill-pill">Content Strategy</span>
+            <span class="skill-pill">Coordination</span>
+        </div>
+
+        <div class="connect-grid">
+            <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="social-box wa-c">
+                <i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span>
+            </a>
+            <a href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" class="social-box li-c">
+                <i class="fa-brands fa-linkedin"></i><span>LinkedIn</span>
+            </a>
+            <a href="https://www.instagram.com/YOUR_INSTAGRAM" target="_blank" class="social-box ig-c">
+                <i class="fa-brands fa-instagram"></i><span>Instagram</span>
+            </a>
+            <a href="https://github.com/YOUR_GITHUB" target="_blank" class="social-box gh-c">
+                <i class="fa-brands fa-github"></i><span>GitHub</span>
+            </a>
+            <a href="mailto:yourmail@gmail.com" class="social-box em-c">
+                <i class="fa-solid fa-envelope"></i><span>Email</span>
+            </a>
+            <a href="#" class="social-box">
+                <i class="fa-solid fa-globe"></i><span>Portfolio</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
